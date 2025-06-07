@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HAPPY MOTMOT BABYYYY</title>
+<style>
+  :root {
+    --bg-light: #0696c2;
+    --text-neutral: #6b7280;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.12);
+    --font-headline: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --transition-speed: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --yellow-light: #facc15;
+    --yellow-hover: #eab308;
+    --yellow-bg: #fffbeb;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-light);
+    color: var(--text-neutral);
+    font-family: var(--font-headline);
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    padding: 1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .envelope-container {
+    cursor: pointer;
+    background: var(--yellow-bg);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 20px var(--shadow-light);
+    padding: 2rem 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed), background-color var(--transition-speed);
+    user-select: none;
+    outline-offset: 4px;
+    outline: none;
+    border: none;
+  }
+  .envelope-container:hover,
+  .envelope-container:focus-visible {
+    box-shadow: 0 10px 28px var(--shadow-hover);
+    transform: scale(1.05);
+    background-color: rgb(218, 72, 140);
+    outline: 2px solid var(--yellow-hover);
+  }
+
+  .envelope-icon {
+    width: 200px;
+    height: 100px;
+    fill: var(--yellow-light);
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+    transition: fill var(--transition-speed);
+    color: var(--yellow-light);
+  }
+  .envelope-container:hover .envelope-icon {
+    fill: var(--yellow-hover);
+    color: var(--yellow-hover);
+  }
+
+  .envelope-path {
+    stroke: #fff9db;
+    stroke-width: 4;
+    fill: none;
+    transition: stroke var(--transition-speed);
+  }
+  .envelope-container:hover .envelope-path {
+    stroke: #fff;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(25, 121, 231, 0.85);
+    backdrop-filter: blur(8px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed);
+    z-index: 1000;
+  }
+  .popup-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .popup-image {
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    transform: scale(0.8);
+    opacity: 0;
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+    object-fit: contain;
+  }
+  .popup-overlay.active .popup-image {
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>
+</head>
+<body>
+
+<button class="envelope-container" aria-label="Open envelope to show image">
+  <svg class="envelope-icon" viewBox="0 0 64 48" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg">
+    <rect width="64" height="48" rx="8" ry="8" fill="currentColor" />
+    <path class="envelope-path" d="M4 8 L32 28 L60 8" />
+  </svg>
+</button>
+
+<div class="popup-overlay" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+  <img
+    src="card.jpg"
+    alt="card"
+    class="popup-image"
+  />
+</div>
+
+<script>
+  (() => {
+    const envelopeButton = document.querySelector('.envelope-container');
+    const popupOverlay = document.querySelector('.popup-overlay');
+
+    function openPopup() {
+      popupOverlay.classList.add('active');
+      popupOverlay.setAttribute('aria-hidden', 'false');
+      popupOverlay.focus();
+    }
+
+    function closePopup() {
+      popupOverlay.classList.remove('active');
+      popupOverlay.setAttribute('aria-hidden', 'true');
+      envelopeButton.focus();
+    }
+
+    envelopeButton.addEventListener('click', openPopup);
+
+    popupOverlay.addEventListener('click', (event) => {
+      if (event.target === popupOverlay) {
+        closePopup();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && popupOverlay.classList.contains('active')) {
+        closePopup();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
