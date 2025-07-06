@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY MOTMOT BABY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+        
+        :root {
+            --primary: #ff6b81;
+            --secondary: #ff8e8e;
+            --accent: #ff4757;
+            --light: #fff6f6;
+            --dark: #2f3542;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .heart {
+            color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart-shape {
+            position: absolute;
+            opacity: 0;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Timer */
+        .timer-section {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+        }
+        
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .timer-box {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 100px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timer-box span:first-child {
+            font-size: 2.5rem;
+            display: block;
+            font-weight: bold;
+        }
+        
+        .timer-box span:last-child {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Gallery */
+        .gallery-section {
+            padding: 80px 20px;
+            background-color: var(--light);
+        }
+        
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .gallery-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Love Letter */
+        .letter-section {
+            padding: 80px 20px;
+            background-color: white;
+        }
+        
+        .letter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .letter-container:before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px dashed var(--primary);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+        
+        .letter-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Reasons Section */
+        .reasons-section {
+            padding: 80px 20px;
+            background-color: var(--light);
+        }
+        
+        .reasons-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .reasons-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+        
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .reason-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .reason-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reason-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .reason-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+        }
+        
+        .reason-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        footer p {
+            margin-bottom: 15px;
+        }
+        
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .timer-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .timer-box {
+                min-width: 80px;
+            }
+            
+            .letter-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="hearts-container" id="hearts-container"></div>
+        <div class="container">
+            <h1>Happy <span class="heart">♥</span> Monthsary, My babyyyy</h1>
+            <p>Everyday with you is a blessing I cherish, capturing our beautiful journey together.</p>
+        </div>
+    </header>
+    
+    <section class="timer-section">
+        <div class="container">
+            <h2>Our Time Together</h2>
+            <p>Every second with you is precious</p>
+            <div class="timer-container">
+                <div class="timer-box">
+                    <span id="months">0</span>
+                    <span>Months</span>
+                </div>
+                <div class="timer-box">
+                    <span id="days">0</span>
+                    <span>Days</span>
+                </div>
+                <div class="timer-box">
+                    <span id="hours">0</span>
+                    <span>Hours</span>
+                </div>
+                <div class="timer-box">
+                    <span id="minutes">0</span>
+                    <span>Minutes</span>
+                </div>
+                <div class="timer-box">
+                    <span id="seconds">0</span>
+                    <span>Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-title">
+                <h2>Our Beautiful Memories</h2>
+                <p>Moments I'll treasure forever</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="1.jpg" />
+                    <div class="gallery-caption">
+                        <h3>Our First GMAAPS Together</h3>
+                        <p>THE WAY YOU TOOK CARE OF ME</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="2.jpg" />
+                    <div class="gallery-caption">
+                        <h3>Ramen Dateeee</h3>
+                        <p>Even If It's Spicy For Me HAJSBDHABWASD</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="3.jpg" />
+                    <div class="gallery-caption">
+                        <h3>Our First Bond With Your Familyyy</h3>
+                        <p>The Way You Made Me Not Feel Left Out</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="5.jpg" />
+                    <div class="gallery-caption">
+                        <h3>Your Debuttt</h3>
+                        <p>The night, you took my breath away, effortlessly. </p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="6.jpg" />
+                    <div class="gallery-caption">
+                        <h3>MY BEST MUSE HABDHAWBFDHABSDHAWF</h3>
+                        <p>I couldn't take my eyes off you</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="4.jpg" />
+                    <div class="gallery-caption">
+                        <h3>Our Graduationn</h3>
+                        <p>We grew, we learned, we made memories forever.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="letter-section">
+        <div class="container">
+            <div class="letter-container">
+                <div class="letter-content">
+                    <h2 style="text-align: center; margin-bottom: 30px;">To My Baby</h2>
+                    <p>Another month has passed, and my heart still skips a beat every time I think about how lucky I am to have you in my life. You've become my safe place, my peace, and my favorite person all in one. Being with you feels like home, warm, comforting, and full of love.</p>
+                    <p>You bring light to my darkest days, laughter to my quiet moments, and meaning to my every endeavor. Your kindness, your strength, your smile, these are the treasures that fill my heart with joy.</p>
+                    <p>Every month we spend together is a gift I never take for granted. Through challenges and celebrations alike, your love remains my constant, my comfort, my home.</p>
+                    <p>This website is just a small glimpse of what you mean to me. No words or images could fully capture the depth of my love, but I hope it brings a smile to your beautiful face.</p>
+                    <p>Thank you for being the person who listens to my nonsense, supports my dreams, and reminds me that I'm never alone. You've taught me what real love feels like, and because of you, I've become a better version of myself. thank you so much, baby kooooo!!</p>
+                    <p style="margin-top: 30px; text-align: right;">With all my love, always</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="reasons-section">
+        <div class="container">
+            <div class="reasons-title">
+                <h2>10 Reasons I Love You</h2>
+                <p>(Just a few of the countless reasons)</p>
+            </div>
+            <div class="reasons-grid">
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">1</div>
+                    <div class="reason-content">Your beautiful smile that lights up my world</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">2</div>
+                    <div class="reason-content">How you make even ordinary moments special</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">3</div>
+                    <div class="reason-content">Your kindness that touches everyone around you</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">4</div>
+                    <div class="reason-content">The way you understand me without words</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">5</div>
+                    <div class="reason-content">Your courage that inspires me every day</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">6</div>
+                    <div class="reason-content">How perfectly your hand fits in mine</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">7</div>
+                    <div class="reason-content">Your laugh that I could listen to forever</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">8</div>
+                    <div class="reason-content">The way you believe in me unconditionally</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">9</div>
+                    <div class="reason-content">Your hugs that feel like coming home</div>
+                </div>
+                <div class="reason-card" onclick="this.classList.toggle('active')">
+                    <div class="reason-number">10</div>
+                    <div class="reason-content">Simply because... it's you</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>thank you for being you</p>
+            <p>i love youuuuuu more than words can express</p>
+            <p class="signature">baby mooo :PP</p>
+            <p id="current-date"></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Floating hearts animation
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts-container');
+            const heartCount = 200;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-shape');
+                heart.innerHTML = '♥';
+                
+                // Random position and animation delay
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.fontSize = `${10 + Math.random() * 20}px`;
+                heart.style.animationDuration = `${5 + Math.random() * 5}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Monthsary counter - set your anniversary date here (YYYY, MM-1, DD)
+        // Example: new Date(2023, 6, 15) is July 15, 2023 (months are 0-indexed)
+        const anniversaryDate = new Date(2023, 1, 7);
+        
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - anniversaryDate;
+            
+            const seconds = Math.floor(diff / 1000) % 60;
+            const minutes = Math.floor(diff / (1000 * 60)) % 60;
+            const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const months = Math.floor(days / 30.44); // Average month length
+            
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days % 30;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        
+        // Update current date in footer
+        function updateCurrentDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', options);
+        }
+        
+        // Initialize everything when page loads
+        window.onload = function() {
+            createHearts();
+            updateTimer();
+            updateCurrentDate();
+            
+            // Update the counter every second
+            setInterval(updateTimer, 1000);
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        };
+    </script>
+</body>
+</html>
+
